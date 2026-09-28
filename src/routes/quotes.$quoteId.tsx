@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 import type { Quote } from "@/lib/types";
 
-export const Route = createFileRoute("/quotes/$quoteId")({
+export const Route = createFileRoute("/quotes/_quoteId")({
   component: BuilderPage,
   head: () => ({
     meta: [

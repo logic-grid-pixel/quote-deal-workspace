@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuotesRouteImport } from './routes/quotes'
+import { Route as QuotesQuoteIdRouteImport } from './routes/quotes._quoteId'
 import { Route as QuotesNewRouteImport } from './routes/quotes.new'
 
 const IndexRoute = IndexRouteImport.update({
@@ -22,6 +23,10 @@ const QuotesRoute = QuotesRouteImport.update({
   id: '/quotes',
   path: '/quotes',
   getParentRoute: () => rootRouteImport,
+} as any)
+const QuotesQuoteIdRoute = QuotesQuoteIdRouteImport.update({
+  id: '/_quoteId',
+  getParentRoute: () => QuotesRoute,
 } as any)
 const QuotesNewRoute = QuotesNewRouteImport.update({
   id: '/new',
@@ -43,6 +48,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/quotes': typeof QuotesRouteWithChildren
+  '/quotes/_quoteId': typeof QuotesQuoteIdRoute
   '/quotes/new': typeof QuotesNewRoute
 }
 export interface FileRouteTypes {
@@ -50,7 +56,7 @@ export interface FileRouteTypes {
   fullPaths: '/' | '/quotes' | '/quotes/new'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/quotes' | '/quotes/new'
-  id: '__root__' | '/' | '/quotes' | '/quotes/new'
+  id: '__root__' | '/' | '/quotes' | '/quotes/_quoteId' | '/quotes/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -74,6 +80,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuotesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quotes/_quoteId': {
+      id: '/quotes/_quoteId'
+      path: ''
+      fullPath: '/quotes'
+      preLoaderRoute: typeof QuotesQuoteIdRouteImport
+      parentRoute: typeof QuotesRoute
+    }
     '/quotes/new': {
       id: '/quotes/new'
       path: '/new'
@@ -85,10 +98,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface QuotesRouteChildren {
+  QuotesQuoteIdRoute: typeof QuotesQuoteIdRoute
   QuotesNewRoute: typeof QuotesNewRoute
 }
 
 const QuotesRouteChildren: QuotesRouteChildren = {
+  QuotesQuoteIdRoute: QuotesQuoteIdRoute,
   QuotesNewRoute: QuotesNewRoute,
 }
 
