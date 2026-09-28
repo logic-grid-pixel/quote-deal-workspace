@@ -142,7 +142,7 @@ export const INITIAL_QUOTES: Quote[] = [
     audit: [
       { id: "a1", ts: Date.now() - 86_400_000 * 2, actor: "Seller", action: "Quote created from intake", detail: "250 seats · 3yr · NA · Direct" },
       { id: "a2", ts: Date.now() - 86_400_000 * 2 + 300_000, actor: "Copilot", action: "Bundle suggested", detail: "XDR Pro + XSIAM + Premier Support (91% confidence)" },
-ed    ],
+    ],
   },
   {
     id: "q-cobalt",
@@ -162,7 +162,7 @@ ed    ],
       { id: "qc-1", productId: "prisma-cloud", qty: 140, discountPct: 19, termYears: 3 },
       { id: "qc-2", productId: "sase", qty: 1200, discountPct: 24, termYears: 3 },
       { id: "qc-3", productId: "u42-ir", qty: 1, discountPct: 5, termYears: 3 },
-ec  ],
+  ],
     audit: [
       { id: "a3", ts: Date.now() - 86_400_000 * 4, actor: "Seller", action: "Quote created from intake" },
       { id: "a4", ts: Date.now() - 86_400_000, actor: "Seller", action: "Submitted for approval", detail: "Blended discount 22.8% → VP Sales + Deal Desk" },
