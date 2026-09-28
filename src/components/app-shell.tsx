@@ -6,12 +6,21 @@ import {
   LayoutDashboard,
   ScrollText,
   Stamp,
+  type LucideIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useDealStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-const NAV = [
+type NavItem = {
+  to: string;
+  label: string;
+  icon: LucideIcon;
+  exact?: boolean;
+  badge?: "approvals";
+};
+
+const NAV: { section: string; items: NavItem[] }[] = [
   {
     section: "Workspace",
     items: [{ to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true }],
@@ -21,7 +30,7 @@ const NAV = [
     items: [
       { to: "/quotes/new", label: "New quote", icon: FilePlus2 },
       { to: "/quotes", label: "Quotes", icon: ScrollText },
-      { to: "/approvals", label: "Approvals", icon: Stamp, badge: "approvals" as const },
+      { to: "/approvals", label: "Approvals", icon: Stamp, badge: "approvals" },
     ],
   },
   {
@@ -60,7 +69,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                     <Link
                       key={item.to}
                       to={item.to}
-                      activeOptions={item.to === "/" ? { exact: true } : undefined}
+                      activeOptions={item.exact ? { exact: true } : {}}
                       className="group flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm text-sidebar-foreground/75 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                       activeProps={{
                         className:
@@ -100,7 +109,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Link
               key={item.to}
               to={item.to}
-              activeOptions={item.to === "/" ? { exact: true } : undefined}
+              activeOptions={item.exact ? { exact: true } : {}}
               className={cn(
                 "rounded px-2 py-1 text-muted-foreground hover:bg-accent hover:text-accent-foreground",
               )}
