@@ -51,7 +51,7 @@ export interface Intake {
   termYears: number;
   region: Region;
   channel: Channel;
-  partnerId?: string;
+  partnerId?: string | undefined;
   productsOfInterest: string;
   emailSnippet: string;
 }
