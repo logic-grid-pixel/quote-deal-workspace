@@ -25,7 +25,7 @@ export interface QuoteLine {
   qty: number;
   discountPct: number;
   termYears: number;
-  source?: "manual" | "bundle" | "renewal";
+  source?: "manual" | "bundle" | "renewal" | "original" | "amendment" | undefined;
 }
 
 export type QuoteStatus =
@@ -41,7 +41,7 @@ export interface AuditEntry {
   ts: number;
   actor: "Seller" | "Copilot" | "Deal Desk" | "System";
   action: string;
-  detail?: string;
+  detail?: string | undefined;
 }
 
 export interface Intake {
@@ -63,18 +63,18 @@ export interface Quote {
   industry: string;
   region: Region;
   channel: Channel;
-  partnerId?: string;
+  partnerId?: string | undefined;
   seats: number;
   termYears: number;
   owner: string;
   createdAt: number;
   status: QuoteStatus;
   lines: QuoteLine[];
-  narrative?: string;
-  internalNote?: string;
+  narrative?: string | undefined;
+  internalNote?: string | undefined;
   audit: AuditEntry[];
-  submittedAt?: number;
-  decidedAt?: number;
+  submittedAt?: number | undefined;
+  decidedAt?: number | undefined;
 }
 
 export type AmendmentType = "add" | "remove" | "change" | "coterm" | "renewal";
@@ -99,16 +99,16 @@ export type ContractStatus = "Active" | "Expiring" | "Expired";
 export interface Contract {
   id: string;
   number: string;
-  quoteId?: string;
+  quoteId?: string | undefined;
   customer: string;
-  partnerId?: string;
+  partnerId?: string | undefined;
   startDate: string;
   endDate: string;
   status: ContractStatus;
   autoRenew: boolean;
   lines: ContractLine[];
   amendments: Amendment[];
-  notes?: string;
+  notes?: string | undefined;
 }
 
 export interface HistoricalQuote {
