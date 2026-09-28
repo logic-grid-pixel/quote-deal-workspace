@@ -39,9 +39,9 @@ const ContractsIndexRoute = ContractsIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContractsContractIdRoute = ContractsContractIdRouteImport.update({
-  id: '/$contractId',
-  path: '/$contractId',
-  getParentRoute: () => ContractsRoute,
+  id: '/contracts/$contractId',
+  path: '/contracts/$contractId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const QuotesIndexRoute = QuotesIndexRouteImport.update({
   id: '/quotes/',
@@ -49,14 +49,14 @@ const QuotesIndexRoute = QuotesIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuotesQuoteIdRoute = QuotesQuoteIdRouteImport.update({
-  id: '/$quoteId',
-  path: '/$quoteId',
-  getParentRoute: () => QuotesRoute,
+  id: '/quotes/$quoteId',
+  path: '/quotes/$quoteId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const QuotesNewRoute = QuotesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => QuotesRoute,
+  id: '/quotes/new',
+  path: '/quotes/new',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -127,6 +127,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApprovalsRoute: typeof ApprovalsRoute
   PartnersRoute: typeof PartnersRoute
+  ContractsContractIdRoute: typeof ContractsContractIdRoute
+  QuotesQuoteIdRoute: typeof QuotesQuoteIdRoute
+  QuotesNewRoute: typeof QuotesNewRoute
   ContractsIndexRoute: typeof ContractsIndexRoute
   QuotesIndexRoute: typeof QuotesIndexRoute
 }
@@ -163,10 +166,10 @@ declare module '@tanstack/react-router' {
     }
     '/contracts/$contractId': {
       id: '/contracts/$contractId'
-      path: '/$contractId'
+      path: '/contracts/$contractId'
       fullPath: '/contracts/$contractId'
       preLoaderRoute: typeof ContractsContractIdRouteImport
-      parentRoute: typeof ContractsRoute
+      parentRoute: typeof rootRouteImport
     }
     '/quotes/': {
       id: '/quotes/'
@@ -177,17 +180,17 @@ declare module '@tanstack/react-router' {
     }
     '/quotes/$quoteId': {
       id: '/quotes/$quoteId'
-      path: '/$quoteId'
+      path: '/quotes/$quoteId'
       fullPath: '/quotes/$quoteId'
       preLoaderRoute: typeof QuotesQuoteIdRouteImport
-      parentRoute: typeof QuotesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/quotes/new': {
       id: '/quotes/new'
-      path: '/new'
+      path: '/quotes/new'
       fullPath: '/quotes/new'
       preLoaderRoute: typeof QuotesNewRouteImport
-      parentRoute: typeof QuotesRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -196,6 +199,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApprovalsRoute: ApprovalsRoute,
   PartnersRoute: PartnersRoute,
+  ContractsContractIdRoute: ContractsContractIdRoute,
+  QuotesQuoteIdRoute: QuotesQuoteIdRoute,
+  QuotesNewRoute: QuotesNewRoute,
   ContractsIndexRoute: ContractsIndexRoute,
   QuotesIndexRoute: QuotesIndexRoute,
 }
