@@ -2,7 +2,7 @@
 
 A quote-to-renewal workspace for the quote/deal family: intake, quote building with comparable-quote intelligence, approvals, contracts with prorated amendments, and partner visibility — in one app.
 
-**Live demo:** https://quote-concept.lovable.app
+**Live demo:** https://quote-deal-workspace.lovable.app
 
 > Demo prototype only. All companies, people, quotes, and contracts are fictional sample data — no real PII, no backend, nothing is stored or sent anywhere. All state lives in your browser session.
 
