@@ -79,8 +79,6 @@ const channelAffinity: Record<Channel, Record<Channel, number>> = {
 
 export function matchQuote(quote: Quote, hist: HistoricalQuote): QuoteMatch {
   const reasons: string[] = [];
-  const quoteSkus = new Set(quote.lines.map((l) => products_of(quote).get(l.productId) ?? l.productId));
-  void quoteSkus;
 
   const histSkus = new Set(hist.lines.map((l) => l.productId));
   const quoteLineSkus = new Set(quote.lines.map((l) => l.productId));
@@ -130,8 +128,6 @@ export function matchQuote(quote: Quote, hist: HistoricalQuote): QuoteMatch {
   };
 }
 
-const products_of = (_q: Quote) => new Map<string, string>();
-
 export function rankComps(quote: Quote, historical: HistoricalQuote[]): QuoteMatch[] {
   return historical
     .map((h) => matchQuote(quote, h))
@@ -149,16 +145,17 @@ export function compsSummary(quote: Quote, matches: QuoteMatch[], products: Prod
     };
   }
   const discounts = top.flatMap((m) => m.lines.map((l) => l.discountPct));
-  const median = discounts.sort((a, b) => a - b)[Math.floor(discounts.length / 2)];
-  const primary = quote.lines[0] ? products.find((p) => p.id === quote.lines[0].productId) : undefined;
-  const best = top[0];
+  const median = discounts.sort((a, b) => a - b)[Math.floor(discounts.length / 2)] ?? 0;
+  const firstLine = quote.lines[0];
+  const primary = firstLine ? products.find((p) => p.id === firstLine.productId) : undefined;
+  const best = top[0]!;
   return {
     headline: `${top.length} recent approval${top.length > 1 ? "s" : ""} match this shape: ${
       primary?.name ?? "core platform"
     }-led bundles close around a ${fmtPct(median, 0)} median discount on a ${best.termMonths}-month term.`,
     bullets: [
       `Median approved discount across matches: ${fmtPct(median, 0)} (you proposed ${fmtPct(blendedDiscount, 0)} blended).`,
-      `Closest precedent: ${best.id} · ${best.customer} — ${best.matchPct}% match, approved ${new Date(best.approvedDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })} by ${best.approvedBy.split("—")[0].trim()}.`,
+      `Closest precedent: ${best.id} · ${best.customer} — ${best.matchPct}% match, approved ${new Date(best.approvedDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })} by ${best.approvedBy.split("—")[0]!.trim()}.`,
       `${top.filter((m) => m.region === quote.region).length} of ${top.length} matches are in ${quote.region}; channel profile is ${quote.channel}.`,
     ],
     recommendation:
