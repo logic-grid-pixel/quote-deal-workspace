@@ -315,7 +315,7 @@ function Builder({
                     </ul>
                     <p className="num mt-2 text-[11px]">
                       {fmtMoney(m.lines.reduce((s, l) => s + lineNet(l, products), 0))} approved{" "}
-                      {new Date(m.approvedDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} by {m.approvedBy.split("—")[0].trim()}
+                      {new Date(m.approvedDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} by {m.approvedBy.split("—")[0]!.trim()}
                     </p>
                     <table className="num mt-2 w-full text-[10px] text-muted-foreground">
                       <tbody>
