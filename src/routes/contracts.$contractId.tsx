@@ -107,7 +107,7 @@ function ContractDetail() {
         <Stat
           label="Amendments"
           value={String(contract.amendments.length)}
-          sub={contract.amendments.length ? `last ${fmtDate(contract.amendments[contract.amendments.length - 1].date)}` : "none on record"}
+          sub={contract.amendments.length ? `last ${fmtDate(contract.amendments[contract.amendments.length - 1]!.date)}` : "none on record"}
         />
       </section>
 
