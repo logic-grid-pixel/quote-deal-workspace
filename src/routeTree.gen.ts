@@ -10,7 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApprovalsRouteImport } from './routes/approvals'
+import { Route as ContractsRouteImport } from './routes/contracts'
+import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as QuotesRouteImport } from './routes/quotes'
+import { Route as ContractsContractIdRouteImport } from './routes/contracts.$contractId'
 import { Route as QuotesQuoteIdRouteImport } from './routes/quotes.$quoteId'
 import { Route as QuotesNewRouteImport } from './routes/quotes.new'
 
@@ -19,10 +23,30 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApprovalsRoute = ApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractsRoute = ContractsRouteImport.update({
+  id: '/contracts',
+  path: '/contracts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuotesRoute = QuotesRouteImport.update({
   id: '/quotes',
   path: '/quotes',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ContractsContractIdRoute = ContractsContractIdRouteImport.update({
+  id: '/$contractId',
+  path: '/$contractId',
+  getParentRoute: () => ContractsRoute,
 } as any)
 const QuotesQuoteIdRoute = QuotesQuoteIdRouteImport.update({
   id: '/$quoteId',
@@ -37,33 +61,73 @@ const QuotesNewRoute = QuotesNewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/approvals': typeof ApprovalsRoute
+  '/contracts': typeof ContractsRouteWithChildren
+  '/partners': typeof PartnersRoute
   '/quotes': typeof QuotesRouteWithChildren
+  '/contracts/$contractId': typeof ContractsContractIdRoute
   '/quotes/$quoteId': typeof QuotesQuoteIdRoute
   '/quotes/new': typeof QuotesNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/approvals': typeof ApprovalsRoute
+  '/contracts': typeof ContractsRouteWithChildren
+  '/partners': typeof PartnersRoute
   '/quotes': typeof QuotesRouteWithChildren
+  '/contracts/$contractId': typeof ContractsContractIdRoute
   '/quotes/$quoteId': typeof QuotesQuoteIdRoute
   '/quotes/new': typeof QuotesNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/approvals': typeof ApprovalsRoute
+  '/contracts': typeof ContractsRouteWithChildren
+  '/partners': typeof PartnersRoute
   '/quotes': typeof QuotesRouteWithChildren
+  '/contracts/$contractId': typeof ContractsContractIdRoute
   '/quotes/$quoteId': typeof QuotesQuoteIdRoute
   '/quotes/new': typeof QuotesNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/quotes' | '/quotes/$quoteId' | '/quotes/new'
+  fullPaths:
+    | '/'
+    | '/approvals'
+    | '/contracts'
+    | '/partners'
+    | '/quotes'
+    | '/contracts/$contractId'
+    | '/quotes/$quoteId'
+    | '/quotes/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/quotes' | '/quotes/$quoteId' | '/quotes/new'
-  id: '__root__' | '/' | '/quotes' | '/quotes/$quoteId' | '/quotes/new'
+  to:
+    | '/'
+    | '/approvals'
+    | '/contracts'
+    | '/partners'
+    | '/quotes'
+    | '/contracts/$contractId'
+    | '/quotes/$quoteId'
+    | '/quotes/new'
+  id:
+    | '__root__'
+    | '/'
+    | '/approvals'
+    | '/contracts'
+    | '/partners'
+    | '/quotes'
+    | '/contracts/$contractId'
+    | '/quotes/$quoteId'
+    | '/quotes/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApprovalsRoute: typeof ApprovalsRoute
+  ContractsRoute: typeof ContractsRouteWithChildren
+  PartnersRoute: typeof PartnersRoute
   QuotesRoute: typeof QuotesRouteWithChildren
 }
 
@@ -76,12 +140,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/approvals': {
+      id: '/approvals'
+      path: '/approvals'
+      fullPath: '/approvals'
+      preLoaderRoute: typeof ApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contracts': {
+      id: '/contracts'
+      path: '/contracts'
+      fullPath: '/contracts'
+      preLoaderRoute: typeof ContractsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quotes': {
       id: '/quotes'
       path: '/quotes'
       fullPath: '/quotes'
       preLoaderRoute: typeof QuotesRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/contracts/$contractId': {
+      id: '/contracts/$contractId'
+      path: '/$contractId'
+      fullPath: '/contracts/$contractId'
+      preLoaderRoute: typeof ContractsContractIdRouteImport
+      parentRoute: typeof ContractsRoute
     }
     '/quotes/$quoteId': {
       id: '/quotes/$quoteId'
@@ -100,6 +192,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ContractsRouteChildren {
+  ContractsContractIdRoute: typeof ContractsContractIdRoute
+}
+
+const ContractsRouteChildren: ContractsRouteChildren = {
+  ContractsContractIdRoute: ContractsContractIdRoute,
+}
+
+const ContractsRouteWithChildren = ContractsRoute._addFileChildren(
+  ContractsRouteChildren,
+)
+
 interface QuotesRouteChildren {
   QuotesQuoteIdRoute: typeof QuotesQuoteIdRoute
   QuotesNewRoute: typeof QuotesNewRoute
@@ -115,6 +219,9 @@ const QuotesRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApprovalsRoute: ApprovalsRoute,
+  ContractsRoute: ContractsRouteWithChildren,
+  PartnersRoute: PartnersRoute,
   QuotesRoute: QuotesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
