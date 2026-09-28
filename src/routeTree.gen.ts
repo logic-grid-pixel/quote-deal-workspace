@@ -11,10 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApprovalsRouteImport } from './routes/approvals'
-import { Route as ContractsRouteImport } from './routes/contracts'
 import { Route as PartnersRouteImport } from './routes/partners'
-import { Route as QuotesRouteImport } from './routes/quotes'
+import { Route as ContractsIndexRouteImport } from './routes/contracts.index'
 import { Route as ContractsContractIdRouteImport } from './routes/contracts.$contractId'
+import { Route as QuotesIndexRouteImport } from './routes/quotes.index'
 import { Route as QuotesQuoteIdRouteImport } from './routes/quotes.$quoteId'
 import { Route as QuotesNewRouteImport } from './routes/quotes.new'
 
@@ -28,25 +28,25 @@ const ApprovalsRoute = ApprovalsRouteImport.update({
   path: '/approvals',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContractsRoute = ContractsRouteImport.update({
-  id: '/contracts',
-  path: '/contracts',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PartnersRoute = PartnersRouteImport.update({
   id: '/partners',
   path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
-const QuotesRoute = QuotesRouteImport.update({
-  id: '/quotes',
-  path: '/quotes',
+const ContractsIndexRoute = ContractsIndexRouteImport.update({
+  id: '/contracts/',
+  path: '/contracts/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContractsContractIdRoute = ContractsContractIdRouteImport.update({
   id: '/$contractId',
   path: '/$contractId',
   getParentRoute: () => ContractsRoute,
+} as any)
+const QuotesIndexRoute = QuotesIndexRouteImport.update({
+  id: '/quotes/',
+  path: '/quotes/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const QuotesQuoteIdRoute = QuotesQuoteIdRouteImport.update({
   id: '/$quoteId',
@@ -62,73 +62,73 @@ const QuotesNewRoute = QuotesNewRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/approvals': typeof ApprovalsRoute
-  '/contracts': typeof ContractsRouteWithChildren
   '/partners': typeof PartnersRoute
-  '/quotes': typeof QuotesRouteWithChildren
   '/contracts/$contractId': typeof ContractsContractIdRoute
   '/quotes/$quoteId': typeof QuotesQuoteIdRoute
   '/quotes/new': typeof QuotesNewRoute
+  '/contracts/': typeof ContractsIndexRoute
+  '/quotes/': typeof QuotesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/approvals': typeof ApprovalsRoute
-  '/contracts': typeof ContractsRouteWithChildren
   '/partners': typeof PartnersRoute
-  '/quotes': typeof QuotesRouteWithChildren
   '/contracts/$contractId': typeof ContractsContractIdRoute
   '/quotes/$quoteId': typeof QuotesQuoteIdRoute
   '/quotes/new': typeof QuotesNewRoute
+  '/contracts': typeof ContractsIndexRoute
+  '/quotes': typeof QuotesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/approvals': typeof ApprovalsRoute
-  '/contracts': typeof ContractsRouteWithChildren
   '/partners': typeof PartnersRoute
-  '/quotes': typeof QuotesRouteWithChildren
   '/contracts/$contractId': typeof ContractsContractIdRoute
   '/quotes/$quoteId': typeof QuotesQuoteIdRoute
   '/quotes/new': typeof QuotesNewRoute
+  '/contracts/': typeof ContractsIndexRoute
+  '/quotes/': typeof QuotesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/approvals'
-    | '/contracts'
     | '/partners'
-    | '/quotes'
     | '/contracts/$contractId'
     | '/quotes/$quoteId'
     | '/quotes/new'
+    | '/contracts/'
+    | '/quotes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/approvals'
-    | '/contracts'
     | '/partners'
-    | '/quotes'
     | '/contracts/$contractId'
     | '/quotes/$quoteId'
     | '/quotes/new'
+    | '/contracts'
+    | '/quotes'
   id:
     | '__root__'
     | '/'
     | '/approvals'
-    | '/contracts'
     | '/partners'
-    | '/quotes'
     | '/contracts/$contractId'
     | '/quotes/$quoteId'
     | '/quotes/new'
+    | '/contracts/'
+    | '/quotes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApprovalsRoute: typeof ApprovalsRoute
-  ContractsRoute: typeof ContractsRouteWithChildren
   PartnersRoute: typeof PartnersRoute
-  QuotesRoute: typeof QuotesRouteWithChildren
+  ContractsIndexRoute: typeof ContractsIndexRoute
+  QuotesIndexRoute: typeof QuotesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -147,13 +147,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApprovalsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/contracts': {
-      id: '/contracts'
-      path: '/contracts'
-      fullPath: '/contracts'
-      preLoaderRoute: typeof ContractsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/partners': {
       id: '/partners'
       path: '/partners'
@@ -161,11 +154,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/quotes': {
-      id: '/quotes'
-      path: '/quotes'
-      fullPath: '/quotes'
-      preLoaderRoute: typeof QuotesRouteImport
+    '/contracts/': {
+      id: '/contracts/'
+      path: '/contracts'
+      fullPath: '/contracts/'
+      preLoaderRoute: typeof ContractsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contracts/$contractId': {
@@ -174,6 +167,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/contracts/$contractId'
       preLoaderRoute: typeof ContractsContractIdRouteImport
       parentRoute: typeof ContractsRoute
+    }
+    '/quotes/': {
+      id: '/quotes/'
+      path: '/quotes'
+      fullPath: '/quotes/'
+      preLoaderRoute: typeof QuotesIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/quotes/$quoteId': {
       id: '/quotes/$quoteId'
@@ -192,37 +192,12 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface ContractsRouteChildren {
-  ContractsContractIdRoute: typeof ContractsContractIdRoute
-}
-
-const ContractsRouteChildren: ContractsRouteChildren = {
-  ContractsContractIdRoute: ContractsContractIdRoute,
-}
-
-const ContractsRouteWithChildren = ContractsRoute._addFileChildren(
-  ContractsRouteChildren,
-)
-
-interface QuotesRouteChildren {
-  QuotesQuoteIdRoute: typeof QuotesQuoteIdRoute
-  QuotesNewRoute: typeof QuotesNewRoute
-}
-
-const QuotesRouteChildren: QuotesRouteChildren = {
-  QuotesQuoteIdRoute: QuotesQuoteIdRoute,
-  QuotesNewRoute: QuotesNewRoute,
-}
-
-const QuotesRouteWithChildren =
-  QuotesRoute._addFileChildren(QuotesRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApprovalsRoute: ApprovalsRoute,
-  ContractsRoute: ContractsRouteWithChildren,
   PartnersRoute: PartnersRoute,
-  QuotesRoute: QuotesRouteWithChildren,
+  ContractsIndexRoute: ContractsIndexRoute,
+  QuotesIndexRoute: QuotesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
