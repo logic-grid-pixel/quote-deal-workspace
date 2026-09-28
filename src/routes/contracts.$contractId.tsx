@@ -4,7 +4,7 @@ import { FilePlus2, Plus } from "lucide-react";
 import { useDealStore } from "@/lib/store";
 import { annualValue, contractArr, contractTcv, proratedValue } from "@/lib/pricing";
 import { fmtCompact, fmtDate, fmtMoney, todayISO } from "@/lib/format";
-import { ContractStatusBadge, TierBadge } from "@/components/status-badge";
+import { ContractStatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

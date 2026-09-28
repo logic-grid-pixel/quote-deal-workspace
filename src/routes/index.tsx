@@ -182,7 +182,7 @@ function Kpi({
   label: string;
   value: string;
   sub: string;
-  tone?: "amber";
+  tone?: "amber" | undefined;
 }) {
   return (
     <div className="rounded-lg border border-border bg-card p-4">

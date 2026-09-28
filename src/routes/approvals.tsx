@@ -82,7 +82,7 @@ function ApprovalsPage() {
                   <p className="text-xs leading-relaxed">{summary.headline}</p>
                   {best && (
                     <p className="num mt-2 text-[11px] text-muted-foreground">
-                      Closest precedent: {best.id} · {best.customer} · {best.matchPct}% match — approved by {best.approvedBy.split("—")[0].trim()}
+                      Closest precedent: {best.id} · {best.customer} · {best.matchPct}% match — approved by {best.approvedBy.split("—")[0]!.trim()}
                     </p>
                   )}
                   <p className="mt-2 text-xs font-medium">{summary.recommendation}</p>
