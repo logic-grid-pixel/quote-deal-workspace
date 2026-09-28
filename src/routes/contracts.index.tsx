@@ -4,7 +4,7 @@ import { contractArr, contractTcv } from "@/lib/pricing";
 import { daysUntil, fmtCompact, fmtDate } from "@/lib/format";
 import { ContractStatusBadge } from "@/components/status-badge";
 
-export const Route = createFileRoute("/contracts")({
+export const Route = createFileRoute("/contracts/")({
   component: ContractsPage,
   head: () => ({
     meta: [

@@ -5,7 +5,7 @@ import { quoteTotals } from "@/lib/pricing";
 import { fmtDate, fmtMoney } from "@/lib/format";
 import { QuoteStatusBadge } from "@/components/status-badge";
 
-export const Route = createFileRoute("/quotes")({
+export const Route = createFileRoute("/quotes/")({
   component: QuotesPage,
   head: () => ({
     meta: [
